@@ -31,9 +31,9 @@ def main():
 
   while True: 
     if (GPIO.input(MOUSETRAP_PIN) == 0):
-      print(datetime.datetime.now(), " EEEEK!! MOUSE!!", file=f)
+      print(datetime.datetime.now(), "<p> EEEEK!! MOUSE!!", file=f)
     else:
-      print(datetime.datetime.now(), " Chill. No mouse.", file=f)
+      print(datetime.datetime.now(), "<p> Chill. No mouse.", file=f)
     f.seek(0)
     time.sleep(2)
 

@@ -4,6 +4,9 @@ To start to:
 
 and check mouse-status.txt
 
+To start web-server:
+  authbind --deep ./mini-web-server-py -l 0.0.0.0
+
 The goal of this project is to build a WiFi mousetrap. This means you should be able to check if the trap has caught a mouse.
 
 There should be two cables attached to the trap.

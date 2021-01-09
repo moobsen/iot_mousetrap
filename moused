@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/home/pi/src/mousetrap/mousetrap.py &
+authbind --deep /home/pi/src/mousetrap/mini-web-sever.py -l 0.0.0.0 &

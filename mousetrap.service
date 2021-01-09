@@ -1,0 +1,12 @@
+[Unit]
+Description=Daemon to check if the mousetrap has caught something
+After=networ-online.target
+
+[Service]
+ExecStart=/home/pi/src/mousetrap/moused
+WorkingDirectory=/home/pi/src/
+Type=forking
+User=pi
+
+[Install]
+WantedBy=multi-user.target

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-    Copyright {2020} {Bluebird Mountain | Moritz Obermeier}
+    Copyright {2021} {Bluebird Mountain | Moritz Obermeier}
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 import RPi.GPIO as GPIO
 import time
 import datetime
+import subprocess
 
 def setup_GPIO(MOUSETRAP_PIN ):
   GPIO.setmode(GPIO.BCM)
@@ -27,15 +28,23 @@ def setup_GPIO(MOUSETRAP_PIN ):
 def main():
   MOUSETRAP_PIN = 2
   setup_GPIO(MOUSETRAP_PIN)
-  f = open("mouse-status.txt", "w+")
+  mail_was_sent = 0
 
-  while True: 
+  while True:
+    f = open("mouse-status.txt", "w+")
     if (GPIO.input(MOUSETRAP_PIN) == 0):
       print(datetime.datetime.now(), "<p> EEEEK!! MOUSE!!", file=f)
+      if (mail_was_sent == 0):
+        subprocess.run(['python3', '/home/pi/src/mousetrap/send_status_smtp.py'])
+        mail_was_sent = 1
+      else:
+        print("<p> Mail has been sent!", file=f)
     else:
       print(datetime.datetime.now(), "<p> Chill. No mouse.", file=f)
-    f.seek(0)
+      mail_was_sent = 0
+    f.close()
     time.sleep(2)
+    open("mouse-status.txt", "w").close()
 
   #we should never get here...
   sys.exit(0)   
